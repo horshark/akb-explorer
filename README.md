@@ -2,8 +2,12 @@
 A command line tool to search AttackerKB.
 
 # How to install
-Not much to do, just clone the repo! :)
-I am only using native libraries for now, they shouldn't be an issue.
+Not much to do, you just have to clone the repo and install the required python libraries.
+```bash
+git clone https://github.com/horshark/akb-explorer/
+pip install -r requirements.txt
+```
+And you are done! :)
 
 # How to use
 This is the help command:
