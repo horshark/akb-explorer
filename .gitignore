@@ -1,3 +1,7 @@
+# Python and vscode files.
 */__pycache__
 __pycache__
-api.txt
+.vscode
+
+# Let's not put that in Github.
+config/api.txt

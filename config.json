@@ -1,7 +1,0 @@
-{
-    "base_url": "https://api.attackerkb.com/",
-    "headers": {
-        "accept" : "application/json",
-        "Authorization" : "basic "
-    }
-}

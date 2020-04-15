@@ -1,0 +1,44 @@
+{
+    "banner":"config/banner.txt",
+    "base_url": "https://api.attackerkb.com/",
+    "headers": {
+        "accept" : "application/json",
+        "Authorization" : "basic "
+    },
+    "sort":{
+        "tags":[
+            "commonEnterprise",
+            "defaultConfiguration",
+            "requiresInteraction",
+            "obscureConfiguration",
+            "difficultToExploit",
+            "preAuth",
+            "postAuth",
+            "noUsefulData",
+            "difficultToDevelop",
+            "difficultToPatch",
+            "highPrivilegeAccess",
+            "easyToDevelop"
+        ],
+        "score":[
+            "attackerValue",
+            "exploitability"
+        ],
+        "description":{
+            "commonEnterprise":"Common in enterprise environments",
+            "defaultConfiguration":"Present in the default configuration of the software",
+            "requiresInteraction":"Requires user interaction to exploit",
+            "obscureConfiguration":"Only present in an obscure configuration of the software",
+            "difficultToExploit":"requires physical access or other high barriers to exploitation",
+            "preAuth":"Authentification not required to exploit",
+            "postAuth":"Requires user interaction to exploit",
+            "noUsefulData":"Does not give attackers access to useful data or footholds",
+            "difficultToDevelop":"Difficult to develop PoC exploits for",
+            "difficultToPatch":"Difficult to patch or mitigate",
+            "highPrivilegeAccess":"Gives attackers high-privileged access quickly",
+            "easyToDevelop":"Easy to develop PoC exploits for",
+            "attackervalue":"Attacker Value",
+            "exploitability":"Exploitability"
+        }
+    }
+}

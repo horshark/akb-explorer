@@ -1,5 +1,17 @@
 import platform, os
 
+
+#########################################################################################
+#                                                                                       #
+#             This whole file needs to be cleaned, re-written and optimized.            #
+#   The reason it's so ugly is because I wrote it while trying to make it look good;    #
+#  be efficient and clean for the user, that implies a lot has changed in the program;  #
+#                           since the first line were written etc.                      #
+#      So yes, I know it's ugly and I need to sit down and re-write it from scratch.    #
+#                                                                                       #
+#########################################################################################
+
+
 def clear():
     if platform.system() == "Windows":
         os.system("cls")
@@ -24,6 +36,34 @@ def print_json(json):
         print(key.upper() + (key_offset-len(key))*" " + "| " + str(json[0][key]))
     
     print("") # New line.
+
+def print_tags(items, desc):
+    s = ""
+
+    max_len = len(max(items, key=len))
+
+    for i in items:
+        # offset = (1 + max_len - len(i))*" "
+        # line = "\t" + i + offset + "| " + desc[i] + "\n"
+
+        offset = (max_len - len(i))*" "
+        line = "\t" + offset + i + " | " + desc[i] + "\n"
+
+        s += line
+
+    return s
+    # separator = '\t\t | \t\t'
+
+    # s = ""
+    # size = len(items)
+
+    # for i in range(0, size):
+    #     item = items[i]
+    #     s += item
+    #     if(not i == size-1):
+    #         s += item + separator+ desc[item] + "\n"
+
+    # return s
 
 def print_contributor(json):
     

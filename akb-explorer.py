@@ -10,28 +10,72 @@ from utils.printer import *
 
 def hasResult(data):
     if data == None or len(data) == 0:
-        print("Sorry, nothing found. Please try with another query.")
+        print("Sorry, nothing found. Please check the filters or try with another query.")
         return False
     return True
 
 
 def main():
+    # Printing the banner.
+    print(config.get_banner())
+
+    # Retrieving needed config.
+    sortTypesConfig = config.get("sort")
+    sortTypes = sortTypesConfig["tags"] + sortTypesConfig["score"]
+    sortTypesDesc = sortTypesConfig["description"]
 
     # Parsing args.
     parser = argparse.ArgumentParser(description='Search through AttackerKB via command line!')
+    
+    ## Making groups.
+    group_search = parser.add_argument_group("Search arguments", "Query using keywords, CVEs or usernames.")
+    group_filter = parser.add_argument_group("Filter arguments", "Sort and filter your query's results using tags and scores.")
 
-    parser.add_argument("-q", "--query", dest="query", help="Search for a topic (by keywords or CVE-YEAR-XXXX)")
-    parser.add_argument("-cve", "--cve", dest="cve", help="Search for a CVE using it's code (CVE-YEAR-XXXX)")
-    parser.add_argument("-u", "--username", dest="user", help="Search for a user")
+    mg_search = group_search.add_mutually_exclusive_group()
+    mg_filter = group_filter.add_mutually_exclusive_group()
+
+    ## Searching arguments.
+    mg_search.add_argument("-q", "--query", dest="query", metavar="KEYWORDS", help="Search for a topic using keywords")
+    mg_search.add_argument("-cve", "--cve", dest="cve", metavar="CVE-YEAR-XXXX", help="Search for a CVE using its code")
+    mg_search.add_argument("-u", "--username", dest="user", metavar="USERNAME", help="Search for a user")
+    
+    ## Filtering args.
+    mg_filter.add_argument("-s", "--sort", choices=sortTypes, metavar="VALUE", dest="sort", help="Let you sort topics using a specified field ascendingly")
+    mg_filter.add_argument("-r", "--rev-sort", choices=sortTypes, metavar="VALUE", dest="rsort", help="Let you sort topics using a specified field descendingly")
+
+    parser.add_argument("-l", "--list", action='store_true',  help="Display every sorting and filter values.")
+
 
     args = parser.parse_args()
 
     current_data = None
 
+    # Handles the sorting options.
+    doSort = False
+    sortAsc = True
+    sortTag = None
+
+    if args.sort:
+        doSort = True
+        sortTag = args.sort
+    if args.rsort:
+        doSort = True
+        sortAsc = False
+        sortTag = args.rsort
+
     # Calls fitting module.
+    ## Listing
+    if args.list == True:
+        print("Tags allow you to both filter and sort. \nHere is the list of every tags:\n" + print_tags(sortTypesConfig["tags"], sortTypesDesc))
+        print("\nHere are values that only supports sorting:\n" + print_tags(sortTypesConfig["score"], sortTypesDesc))
+        exit(0)
+
     ## Queries
-    if args.query:
-        current_data = get_from_name(args.query)
+    elif args.query:
+        if doSort:
+            current_data = get_from_name(args.query, sortTag, sortAsc)
+        else:
+            current_data = get_from_name(args.query)
 
         if hasResult(current_data):
             l = 5
@@ -43,7 +87,12 @@ def main():
                 print_topic_short(current_data, i=i-1)
                 print("--- ("+ str(i) +") for more details -- (else) to leave")
             
-            answer = int(sanitize(input()))
+            # int() doesn't like empty strings, so if sanitize returns an empty string;
+            # answer will be -1 which will cause the program to exit.
+            try:
+                answer = int(sanitize(input()))
+            except:
+                answer = -1
 
             if answer >= 1 and answer <= l:
                 clear()
@@ -51,7 +100,10 @@ def main():
 
     ## CVE
     elif args.cve:
-        current_data = get_from_name(args.cve)
+        if doSort:
+            current_data = get_from_name(args.cve, sortTag, sortAsc)
+        else:
+            current_data = get_from_name(args.cve)
 
         if hasResult(current_data):
             print_topic_short(current_data, cve=args.cve)
@@ -70,6 +122,9 @@ def main():
         if hasResult(current_data):
             print_contributor(current_data)
 
+    ## Nothing, print help message.
+    else:
+        print("No argument found. Try using -h to get help.")
 
 if __name__ == "__main__":
     main()
