@@ -37,7 +37,7 @@
             "difficultToPatch":"Difficult to patch or mitigate",
             "highPrivilegeAccess":"Gives attackers high-privileged access quickly",
             "easyToDevelop":"Easy to develop PoC exploits for",
-            "attackervalue":"Attacker Value",
+            "attackerValue":"Attacker Value",
             "exploitability":"Exploitability"
         }
     }
