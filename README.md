@@ -41,3 +41,5 @@ python3 .\akb-explorer.py -cve CVE-2020-0688
 python3 .\akb-explorer.py -u horshark
 ```
 
+# Credits
+Thanks to @kevthehermit for helping me simplify my tool using his [python library](https://github.com/kevthehermit/attackerkb-api)!
