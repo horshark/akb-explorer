@@ -1,9 +1,8 @@
 import argparse, cgi, json
 
+from attackerkb_api import AttackerKB
 
-from modules.contributors import *
-from modules.topics import *
-
+import utils.config as config
 from utils.sanitizer import sanitize
 from utils.printer import *
 
@@ -18,6 +17,10 @@ def hasResult(data):
 def main():
     # Printing the banner.
     print(config.get_banner())
+
+    api_key = config.token
+    if api_key:
+        api = AttackerKB(api_key)
 
     # Retrieving needed config.
     sortTypesConfig = config.get("sort")
@@ -73,9 +76,11 @@ def main():
     ## Queries
     elif args.query:
         if doSort:
-            current_data = get_from_name(args.query, sortTag, sortAsc)
+            sort_filter = '{0}:{1}'.format(sortTag, 'asc' if sortAsc else 'desc')
+            current_data = api.get_topics(sort=sort_filter, q=args.query)
+            
         else:
-            current_data = get_from_name(args.query)
+            current_data = api.get_topics(q=args.query)
 
         if hasResult(current_data):
             l = 5
@@ -101,9 +106,10 @@ def main():
     ## CVE
     elif args.cve:
         if doSort:
-            current_data = get_from_name(args.cve, sortTag, sortAsc)
+            sort_filter = '{0}:{1}'.format(sortTag, 'asc' if sortAsc else 'desc')
+            current_data = api.get_topics(sort=sort_filter, name=args.cve)
         else:
-            current_data = get_from_name(args.cve)
+            current_data = api.get_topics(name=args.cve)
 
         if hasResult(current_data):
             print_topic_short(current_data, cve=args.cve)
@@ -117,7 +123,8 @@ def main():
 
     ## Users
     elif args.user:
-        current_data = get_from_username(args.user)
+        current_data = api.get_single_contributor(args.user)
+        #current_data = get_from_username(args.user)
 
         if hasResult(current_data):
             print_contributor(current_data)
