@@ -73,10 +73,10 @@ def print_contributor(json):
     key_offset = 3 + margin
 
     items = {
-            "Username":json[0]["username"],
-            "Score":json[0]["score"],
-            "Link":"https://attackerkb.com/contributors/"+json[0]["username"],
-            "Id":json[0]["id"]
+            "Username":json["username"],
+            "Score":json["score"],
+            "Link":"https://attackerkb.com/contributors/"+json["username"],
+            "Id":json["id"]
             }
 
     for key in items:
