@@ -45,4 +45,4 @@ python3 .\akb-explorer.py -u horshark
 Thanks to @kevthehermit for helping me simplify my tool using his [python library](https://github.com/kevthehermit/attackerkb-api)!
 
 # Related projects
-[AttackerKB Discord BOT](https://github.com/horshark/akb-discord-bot)
+* [AttackerKB Discord BOT](https://github.com/horshark/akb-discord-bot)
