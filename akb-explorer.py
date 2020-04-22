@@ -75,20 +75,21 @@ def main():
 
     ## Queries
     elif args.query:
+        max_len = 5
+
         if doSort:
             sort_filter = '{0}:{1}'.format(sortTag, 'asc' if sortAsc else 'desc')
             current_data = api.get_topics(sort=sort_filter, q=args.query)
             
         else:
-            current_data = api.get_topics(q=args.query)
+            current_data = api.get_topics(q=args.query, size=max_len)
 
         if hasResult(current_data):
-            l = 5
 
-            if len(current_data) < 5:
-                l = len(current_data)
+            if len(current_data) < max_len:
+                max_len = len(current_data)
                 
-            for i in range(l,0,-1):
+            for i in range(max_len, 0, -1):
                 print_topic_short(current_data, i=i-1)
                 print("--- ("+ str(i) +") for more details -- (else) to leave")
             
@@ -99,7 +100,7 @@ def main():
             except:
                 answer = -1
 
-            if answer >= 1 and answer <= l:
+            if answer >= 1 and answer <= max_len:
                 clear()
                 print_topic_long(current_data, i=answer-1)
 
