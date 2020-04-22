@@ -124,7 +124,6 @@ def main():
     ## Users
     elif args.user:
         current_data = api.get_single_contributor(args.user)
-        #current_data = get_from_username(args.user)
 
         if hasResult(current_data):
             print_contributor(current_data)
