@@ -7,6 +7,10 @@ Not much to do, you just have to clone the repo and install the required python 
 git clone https://github.com/horshark/akb-explorer/
 pip install -r requirements.txt
 ```
+Then you need to add your AKB API key in ``config/api.txt``. You can retrive it from your AKB profile.
+```bash
+echo "YOUR_AKB_API_KEY_HERE" > config/api.txt
+```
 And you are done! :)
 
 # How to use
