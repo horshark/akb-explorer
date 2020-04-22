@@ -1,4 +1,4 @@
-# akb-explorer
+# AKB-Explorer
 A command line tool to search AttackerKB.
 
 # How to install
