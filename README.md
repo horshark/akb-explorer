@@ -11,9 +11,22 @@ Then you need to add your AKB API key in ``config/api.txt``. You can retrive it 
 ```bash
 echo "YOUR_AKB_API_KEY_HERE" > config/api.txt
 ```
+To run from any location in the file system: 
+```bash
+export PATH=<install_location>:$PATH
+export akb_config=<install_location>
+chmod +x <install_location>/akb-explorer.py
+```
+example installation in /opt/akb-explorer:
+```
+export PATH=/opt/akb-explorer:$PATH
+export akb_config=/opt/akb-explorer
+chmod +x /opt/akb-explorer/akb-explorer.py
+```
 And you are done! :)
 
 # How to use
+## Without instructions to run from anywhere:
 This is the help command:
 ```
 python3 .\akb-explorer.py -h
@@ -29,8 +42,23 @@ optional arguments:
   -u USER, --username USER
                         Search for a user
 ```
+## If you installed with the run from anywhere instructions:
+This is the help command:
+```
+akb-explorer.py -h
+usage: akb-explorer.py [-h] [-q QUERY] [-c CVE] [-u USER]
 
-And below are a few explicit examples.
+Search through AttackerKB via command line!
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -q QUERY, --query QUERY
+                        Search for a topic (by keywords or CVE-YEAR-XXXX)
+  -cve CVE, --cve CVE   Search for a CVE using it's code (CVE-YEAR-XXXX)
+  -u USER, --username USER
+                        Search for a user
+```
+And below are a few explicit examples (omit `python3 .\` if installed to run anywhere).
 * To query using keywords:
 ```bash
 python3 .\akb-explorer.py -q blue

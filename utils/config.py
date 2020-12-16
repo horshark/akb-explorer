@@ -1,5 +1,5 @@
 import json
-
+import os
 # Config initialization.
 def file_not_found(file, message="Uh-oh, looks like something broke. You probably should reclone the repo."):
     error_message = "File " + file + " not found, exiting."
@@ -9,10 +9,12 @@ def file_not_found(file, message="Uh-oh, looks like something broke. You probabl
 
     print(error_message)
     quit()
-
-token_file = "config/api.txt"
-config_file = "config/config.json"
-
+if os.getenv("akb_config") is None:
+    token_file = "config/api.txt"
+    config_file = "config/config.json"
+else:
+    token_file = f'{os.getenv("akb_config")}/config/api.txt'
+    config_file = f'{os.getenv("akb_config")}/config/config.json'
 token = None
 config = None
 
@@ -39,7 +41,10 @@ except:
 
 # Functions to retrieve data.
 def get_banner():
-    banner_file = config["banner"]
+    if os.getenv("akb_config") is None:
+        banner_file = config["banner"]
+    else:
+        banner_file = f'{os.getenv("akb_config")}/config/banner.txt'
 
     try:
         banner = open(banner_file).read()

@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 import argparse, cgi, json
 
 from attackerkb_api import AttackerKB
